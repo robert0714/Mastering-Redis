@@ -286,3 +286,31 @@ Redis uses two methods for doing the actual expiration in the key-space, the fir
 In this chapter's next topic, we will take this knowledge about key expiration and see how Redis can modify it's behavior when it reaches its maximum allowed memory and keys within the key-space have timeouts set.
 
 # LRU key evictions
+page 58
+
+reference: 
+https://redis.io/topics/lru-cache
+
+To demonstrate the various options for key evictions in Redis, we'll start with a simple example by setting a small memory Redis instance that the maxmemory directive sets to 1 megabyte. The maxmemory directive allows you set a hard upper
+bound on the amount of memory that is available to a running Redis instance. 
+
+Echoing the warnings in the default redis.conf file, setting the maxmemory has ramifications that we'll now see. To start with, we'll just create a very simple Redis key schema, that of generating and storing a unique id for a web application. After connecting to a Redis instance through Redis-cli, we'll run the following commands to clear out our datastore and then set the maxmemory directive to 1 megabyte:
+
+```
+127.0.0.1:6379> FLUSHALL
+OK
+127.0.0.1:6379>CONFIG SET maxmemory 1mb
+OK
+```
+Next, we'll implement a function that takes a Redis instance, increments a global uuid , and then generates a random UUID from the standard uuid Python module. 
+The add_id function code in Python is presented as follows in this code snippet:
+
+```
+>>> import uuid
+>>>def add_id(redis_instance):
+     redis_key = "uuid:{}".format(redis_instance.incr("global:uuid"))
+     redis_instance.set(redis_key, uuid.uuid4())
+```
+
+When Redis runs out of memory, the default behavior - the noeviction policy - is illustrated in the following image:
+
