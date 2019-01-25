@@ -138,11 +138,8 @@ def create_tea(datastore, name, time, size):
   # Increment and save global counter
   tea_counter = datastore.incr("global/teas")
   tea_key = "tea/{}".format(tea_counter)
-datastore.hmset(tea_key,
-     {"name": name,
-     "brew-time": time,
-     "box-size": size})
-return tea_key
+  datastore.hmset(tea_key,{"name": name,"brew-time": time,"box-size": size})
+  return tea_key
 
 ```
 Now, we'll import the Redis module for Python, instantiate a StrictRedis class,and create three teas as hashes from a Python shell with this function:
