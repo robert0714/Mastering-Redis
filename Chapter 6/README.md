@@ -122,7 +122,7 @@ Now ,we'll import the Redis module for Python , instantiate a StrictRedis class 
 ```
 >>> import redis
 >>> tea_datastore = redis.StrictRedis()
->>> assign_codes_to_partitions(tea_datastore)
+>>> assign_codes_to_partitions("/vagrant/conf/hadoop-1/area-codes.txt",tea_datastore)
 >>> 
 ```
 
