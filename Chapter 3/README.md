@@ -395,7 +395,7 @@ Now, we're going to create a second function based upon the add_id and use a new
 >>>def add_id_expire(redis_instance):
      count = redis_instance.incr("global:uuid")
      redis_key = "uuid:{}".format(count)
-     redis_instance.set(redis_key, uuid.uuid4())
+     redis_instance.set(redis_key, str(uuid.uuid4()))
      if count <= 75:
         redis_instance.expire(redis_key, 300)
 ```
