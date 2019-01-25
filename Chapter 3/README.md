@@ -312,6 +312,11 @@ The add_id function code in Python is presented as follows in this code snippet:
      redis_instance.set(redis_key, str(uuid.uuid4()))
 ```
 
+reference:
+http://intro2libsys.info/introduction-to-redis/memory-expiration-and-key-eviction
+
+
+
 When Redis runs out of memory, the default behavior - the noeviction policy - is illustrated in the following image:
 
 The default maxmemory-policy policy is noeviction. In noeviction, no keys are set to expire and any write commands will cause a Redis error if there is no available memory to Redis. To confirm that our directives are set for experiment, we will
