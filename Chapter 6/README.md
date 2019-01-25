@@ -115,7 +115,7 @@ def assign_codes_to_partitions(filename, datastore):
             slot = area_code_shard2
          else:
             slot = area_code_shard3
-         datastore.hset(hash_key, code, geo_name.strip())
+         datastore.hset(slot, code, geo_name.strip())
 ```
 Now ,we'll import the Redis module for Python , instantiate a StrictRedis class :
 
