@@ -117,6 +117,14 @@ def assign_codes_to_partitions(filename, datastore):
             slot = area_code_shard3
          datastore.hset(hash_key, code, geo_name.strip())
 ```
+Now ,we'll import the Redis module for Python , instantiate a StrictRedis class :
+
+```
+>>> import redis
+>>> tea_datastore = redis.StrictRedis()
+>>> assign_codes_to_partitions(tea_datastore)
+>>> 
+```
 
 To confirm that the first Redis node has three keys and the size of each hash is what we expect, use a Redis-cli session:
 
