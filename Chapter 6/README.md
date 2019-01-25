@@ -112,9 +112,9 @@ def assign_codes_to_partitions(filename, datastore):
          if i < 106:
             slot= area_code_shard1
          elif i >= 106 and i < 212:
-            slot = area_code_ shard 2
+            slot = area_code_shard2
          else:
-            slot = area_code_ shard 3
+            slot = area_code_shard3
          datastore.hset(hash_key, code, geo_name.strip())
 ```
 
