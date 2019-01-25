@@ -184,17 +184,16 @@ Now, we will add a third function that takes the Redis instance and tea box key,
 brewing set, and finally returns the tea_bag_key :
 
 ```
-defstart_brew(datastore, tea_box_key):
+def start_brew(datastore, tea_box_key):
     tea_box = tea_box_key.split("/box")[0]
     # Brew time is in minutes, we multiple by 60 for expire in seconds
     expire_time = int(datastore.hget(tea_box, "brew-time"))*60
     tea_bag_number = datastore.spop(tea_box_key)
-    tea_bag_key = "{}/bag/{}".format(tea_box_key,
-        tea_bag_number.decode())
+    tea_bag_key = "{}/bag/{}".format(tea_box_key,tea_bag_number.decode())
     datastore.set(tea_bag_key, "brew")
     datastore.expire(tea_bag_key, expire_time)
     datastore.sadd("brewing", tea_bag_key)
-    return tea_bag_key""""""
+    return tea_bag_key 
 ```
 
 Calling the start_brew function three times, once for each type of tea, creates three tea bag keys and sets the expiration time depending on the type of tea:
