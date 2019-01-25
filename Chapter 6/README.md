@@ -23,6 +23,16 @@ def set_range_partitions(datastore, partitions=5, size=20000):
            datastore.setbit(key, offset, 1)
 ```
 
+Now ,we'll import the Redis module for Python , instantiate a StrictRedis class :
+
+```
+>>> import redis
+>>> tea_datastore = redis.StrictRedis()
+>>> set_range_partitions(tea_datastore)
+>>> 
+
+```
+
 We now have five partition keys that store the bitstrings for their range of keys. Because these keys do not take up much memory, we can store a copy on each of our five Redis instances. We’ll first examine *partition:1*:
 
 ```
