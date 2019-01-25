@@ -309,7 +309,7 @@ The add_id function code in Python is presented as follows in this code snippet:
 >>> import uuid
 >>>def add_id(redis_instance):
      redis_key = "uuid:{}".format(redis_instance.incr("global:uuid"))
-     redis_instance.set(redis_key, uuid.uuid4())
+     redis_instance.set(redis_key, str(uuid.uuid4()))
 ```
 
 When Redis runs out of memory, the default behavior - the noeviction policy - is illustrated in the following image:
@@ -328,12 +328,15 @@ first check whether the maxmemory and maxmemory-policy are set to 1 megabyte and
 To test the noeviction policy, we will run a loop in Python until we receive an error, as shown here:
 
 ```
+>>> import redis
+>>> local_redis = redis.StrictRedis()
 >>> while 1:
-add_id(local_redis)
+     add_id(local_redis)
 ```
-Quickly, we receive an exception from the Redis client, as follows: redis.
-exceptions.ResponseError , OOM command not allowed when used memory
-> 'maxmemory' .
+Quickly, we receive an exception from the Redis client, as follows: 
+```
+redis.exceptions.ResponseError: OOM command not allowed when used memory > 'maxmemory' .
+```
 
 Our while loop cycles through 181 times before we hit the 1 megabyte memory limit, with our counter value set at 181 . Now to check the state of our datastore by running the INFO memory command from the our Redis-cli and looking at the used_memory_peak_human :
 
