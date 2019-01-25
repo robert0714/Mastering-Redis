@@ -102,20 +102,20 @@ Back to our example, we will first open a tab-delimited text file containing the
 def assign_codes_to_partitions(filename, datastore):
    with open(filename) as area_codes_file:
       area_codes = area_codes_file.readlines()
-   area_code_shard1 = "area_code:partition:1"
-   area_code_shard2 = "area_code:partition:2"
-   area_code_shard3 = "area_code:partition:3"
-   for i, row in enumerate(area_codes):
-      fields = row.split("\t")
-      code = fields[0]
-      geo_name = fields[1]
-      if i < 106:
-         slot= area_code_shard1
-      elif i >= 106 and i < 212:
-         slot = area_code_ shard 2
-      else:
-         slot = area_code_ shard 3
-      datastore.hset(hash_key, code, geo_name.strip())
+      area_code_shard1 = "area_code:partition:1"
+      area_code_shard2 = "area_code:partition:2"
+      area_code_shard3 = "area_code:partition:3"
+      for i, row in enumerate(area_codes):
+         fields = row.split("\t")
+         code = fields[0]
+         geo_name = fields[1]
+         if i < 106:
+            slot= area_code_shard1
+         elif i >= 106 and i < 212:
+            slot = area_code_ shard 2
+         else:
+            slot = area_code_ shard 3
+         datastore.hset(hash_key, code, geo_name.strip())
 ```
 
 To confirm that the first Redis node has three keys and the size of each hash is what we expect, use a Redis-cli session:
